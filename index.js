@@ -13,10 +13,7 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://your-frontend.vercel.app",
-];
+const allowedOrigins = "*";
 
 const corsOptions = {
   origin: (origin, callback) => {
