@@ -14,12 +14,12 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 const corsOptions = {
-  origin: "*",
+  origin: "http://localhost:5173",
   credentials: true,
   optionSuccessStatus: 200,
 };
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(cookieParser());
 
