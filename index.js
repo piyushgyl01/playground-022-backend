@@ -13,10 +13,21 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:5173", 
+  "https://your-frontend.vercel.app" 
+];
+
 const corsOptions = {
-  origin: "http://localhost:5173",
-  credentials: true,
-  optionSuccessStatus: 200,
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true,   
+  optionsSuccessStatus: 200,
 };
 
 app.use(cors(corsOptions));
@@ -99,8 +110,8 @@ app.post("/auth/login", async (req, res) => {
 
     res.cookie("access_token", token, {
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: true,       
+      sameSite: "none",    
       maxAge: 25 * 60 * 60 * 1000,
       path: "/",
     });
