@@ -13,7 +13,10 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
-const allowedOrigins = "*";
+const allowedOrigins = [
+  "http://localhost:5173/",
+  "https://playground-022-frontend.vercel.app/",
+];
 
 const corsOptions = {
   origin: (origin, callback) => {
