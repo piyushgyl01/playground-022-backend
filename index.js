@@ -14,8 +14,8 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 const allowedOrigins = [
-  "http://localhost:5173", 
-  "https://your-frontend.vercel.app" 
+  "http://localhost:5173",
+  "https://your-frontend.vercel.app",
 ];
 
 const corsOptions = {
@@ -26,11 +26,11 @@ const corsOptions = {
       callback(new Error("Not allowed by CORS"));
     }
   },
-  credentials: true,   
+  credentials: true,
   optionsSuccessStatus: 200,
 };
 
-app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(cookieParser());
 
 initialiseDatabase();
@@ -110,8 +110,8 @@ app.post("/auth/login", async (req, res) => {
 
     res.cookie("access_token", token, {
       httpOnly: true,
-      secure: true,       
-      sameSite: "none",    
+      secure: true,
+      sameSite: "none",
       maxAge: 25 * 60 * 60 * 1000,
       path: "/",
     });
