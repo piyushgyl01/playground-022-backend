@@ -13,14 +13,26 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
+
+const allowedOrigins = [
+  'https://playground-022-frontend.vercel.app', 
+  'http://localhost:3000',  
+  'http://localhost:5173'   
+];
+
 const corsOptions = {
-  origin: "*",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
-  optionSuccessStatus: 200,
+  optionsSuccessStatus: 200
 };
 
 app.use(cors(corsOptions));
-
 app.use(cookieParser());
 
 initialiseDatabase();
